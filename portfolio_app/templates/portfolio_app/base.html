@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Probir's Portfolio{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'portfolio_app/css/style.css' %}">
+    
+    {% block head_extra %}{% endblock %} 
+</head>
+<body>
+    <main id="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+</body>
+</html>

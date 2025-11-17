@@ -1,0 +1,117 @@
+{% extends "portfolio_app/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="portfolio-container">
+    
+    <!-- === PROFILE HEADER AND CONTACTS === -->
+    <div class="profile-header">
+        <div class="header-info">
+            <h1>{{ name }}</h1>
+            <p class="title-role">Python Developer | Backend & AI Enthusiast</p>
+        </div>
+        <img src="{% static 'portfolio_app/img/profile_pic.jpg' %}" alt="{{ name }} Profile Picture" class="profile-img">
+    </div>
+
+    <div class="contact-links">
+        <span class="contact-item">📞 {{ contact.phone }}</span>
+        <span class="contact-item">📧 <a href="mailto:{{ contact.email }}">{{ contact.email }}</a></span>
+        <span class="contact-item">📍 {{ contact.location }}</span>
+        <span class="contact-item social-link-item">
+            <a href="{{ contact.linkedin_url }}" target="_blank" class="social-link linkedin-link">🔗 LinkedIn</a>
+        </span>
+        <span class="contact-item social-link-item">
+            <a href="{{ contact.github_url }}" target="_blank" class="social-link github-link">🐙 GitHub</a>
+        </span>
+    </div>
+
+    <!-- === PROFESSIONAL SUMMARY === -->
+    <h2 class="section-heading"><span>🌟</span> Professional Summary</h2>
+    <p class="summary-text">{{ summary }}</p>
+
+    <!-- === TECHNICAL SKILLS === -->
+    <h2 class="section-heading"><span>🛠</span> Technical Skills</h2>
+    <div class="skills-grid">
+    {% for category_label, items in skills_data.items %}
+        <div class="skill-category">
+            <h3>{{ category_label }}</h3> 
+            <div class="skill-list">
+            {% for item in items %}
+                <span class="skill-item">{{ item }}</span>
+            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <!-- === EXPERIENCE === -->
+    <h2 class="section-heading"><span>💼</span> Experience</h2>
+    {% for job in experience %}
+        <div class="job-entry">
+            <h3>{{ job.title }} <span class="company-name">@ {{ job.company }}</span></h3>
+            <p class="job-years">{{ job.years }}</p>
+            <ul>
+            {% for point in job.points %}
+                <li>{{ point }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+
+    <!-- === PROJECTS (Using a cleaner list format) === -->
+    <h2 class="section-heading"><span>📁</span> Projects</h2>
+    <div class="projects-list">
+    {% for project in projects %}
+        <div class="project-card">
+            <h4>{{ project.title }}</h4>
+            <p class="project-tech"><strong>Tech:</strong> {{ project.technologies }}</p>
+            <p class="project-description">{{ project.description }}</p>
+            
+            {% if project.github_link or project.live_link %}
+            <div class="project-links">
+                {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm">View Code</a>
+                {% endif %}
+                {% if project.live_link %}
+                <a href="{{ project.live_link }}" target="_blank" class="btn btn-sm btn-primary">Live Demo</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p class="placeholder-text">Please add projects via the Django Admin!</p>
+    {% endfor %}
+    </div>
+
+    <!-- === EDUCATION === -->
+    <h2 class="section-heading"><span>🎓</span> Education</h2>
+    <ul class="education-list">
+    {% for edu in education %}
+        <li>
+            <div class="edu-title-line">
+                <strong>{{ edu.degree }}</strong>
+                <span class="edu-years">{{ edu.years }}</span>
+            </div>
+            <p class="edu-school">{{ edu.school }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <!-- === CERTIFICATIONS & OTHER DETAILS === -->
+    <h2 class="section-heading"><span>🏅</span> Certifications & Interests</h2>
+    <div class="other-details">
+        <p><strong>Certifications:</strong> {{ certifications|join:" • " }}</p>
+        <p><strong>Languages:</strong> 
+            {% for lang in languages %}
+                {{ lang.lang }} ({{ lang.level }}){% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Interests:</strong> 
+            {% for interest in interests %}
+                <span class="interest-tag">{{ interest }}</span>{% if not forloop.last %}{% endif %}
+            {% endfor %}
+        </p>
+    </div>
+
+</section>
+{% endblock %}

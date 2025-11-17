@@ -1,0 +1,354 @@
+:root {
+    --primary-color: #007bff; /* Deep Blue - Emphasis */
+    --secondary-color: #343a40; /* Darker Text/Headers */
+    --accent-color: #28a745; /* Green Accent (Success/Highlight) */
+    --background-color: #f8f9fa; /* Light background */
+    --card-background: #ffffff;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+}
+
+.portfolio-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--card-background);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+}
+
+/* Hide default header/footer for a clean resume look */
+header, footer {
+    display: none; 
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #0056b3;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* -------------------------------------- */
+/* 2. PROFILE HEADER & CONTACTS */
+/* -------------------------------------- */
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.header-info h1 {
+    margin: 0 0 5px 0;
+    font-size: 2.8em;
+    color: var(--secondary-color);
+}
+
+.title-role {
+    font-size: 1.1em;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+    margin-bottom: 30px;
+    font-size: 0.95em;
+    padding: 10px 0;
+}
+.contact-item {
+    color: #6c757d;
+}
+.contact-item a {
+    font-weight: 500;
+}
+
+/* Social Link Styling */
+.social-link {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.linkedin-link {
+    background-color: #0077b5;
+    color: white;
+}
+.github-link {
+    background-color: #333;
+    color: white;
+}
+
+/* -------------------------------------- */
+/* 3. SECTION HEADINGS */
+/* -------------------------------------- */
+.section-heading {
+    font-size: 1.6em;
+    color: var(--secondary-color);
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.section-heading span {
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+.summary-text {
+    font-size: 1.05em;
+    line-height: 1.7;
+    padding: 5px 0;
+}
+
+/* -------------------------------------- */
+/* 4. TECHNICAL SKILLS */
+/* -------------------------------------- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.skill-category {
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    background-color: #f8f9fa;
+}
+
+.skill-category h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.15em;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 5px;
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-item {
+    background-color: #e3f2fd; /* Light primary color */
+    color: var(--primary-color);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+/* -------------------------------------- */
+/* 5. EXPERIENCE & EDUCATION */
+/* -------------------------------------- */
+.job-entry {
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.job-entry h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.3em;
+    color: var(--secondary-color);
+}
+
+.company-name {
+    color: #6c757d;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.job-years {
+    color: var(--accent-color);
+    font-size: 0.95em;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.job-entry ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+.job-entry li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+    margin-bottom: 8px;
+}
+.job-entry li::before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-right: 0.5em;
+}
+
+.education-list {
+    list-style: none;
+    padding: 0;
+}
+.education-list li {
+    background-color: #f1f1f1;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.edu-title-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+}
+.edu-years {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+.edu-school {
+    margin: 5px 0 0 0;
+    color: #6c757d;
+}
+
+/* -------------------------------------- */
+/* 6. PROJECTS */
+/* -------------------------------------- */
+.projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    transition: box-shadow 0.3s;
+}
+.project-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-card h4 {
+    color: var(--primary-color);
+    margin: 0 0 5px 0;
+    font-size: 1.4em;
+}
+
+.project-tech {
+    color: var(--accent-color);
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.project-description {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.project-links {
+    margin-top: 10px;
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 0.85em;
+}
+
+/* -------------------------------------- */
+/* 7. OTHER DETAILS */
+/* -------------------------------------- */
+.other-details p {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #eee;
+}
+.interest-tag {
+    background-color: #e9ecef;
+    color: var(--secondary-color);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
+/* -------------------------------------- */
+/* 8. RESPONSIVENESS */
+/* -------------------------------------- */
+@media (max-width: 768px) {
+    .portfolio-container {
+        margin: 20px 15px;
+        padding: 20px;
+    }
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-img {
+        order: -1; 
+        margin-bottom: 15px;
+    }
+    .contact-links {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+    }
+    .skills-grid, .projects-list {
+        grid-template-columns: 1fr;
+    }
+    .section-heading {
+        font-size: 1.4em;
+    }
+}
