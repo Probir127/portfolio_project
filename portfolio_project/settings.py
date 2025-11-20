@@ -1,3 +1,8 @@
+"""
+Django settings for portfolio_project.
+"""
+
+import os
 from pathlib import Path
 import os 
 
@@ -5,18 +10,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 1. READ THE SECRET_KEY FROM THE ENVIRONMENT
-#    (Provide a default only for local development)
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-YOUR_RANDOM_SECRET_KEY')
+SECRET_KEY = 'django-insecure-YOUR_RANDOM_SECRET_KEY'
 
-# 2. SET DEBUG TO READ FROM THE ENVIRONMENT
-#    (Defaults to True for local development)
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Custom App: Add your portfolio application here
+    # Custom App:
     'portfolio_app', 
 ]
 
@@ -64,7 +62,6 @@ WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
 
 # Database
-# For a small project, SQLite is fine.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -76,31 +73,23 @@ DATABASES = {
 # Password validation
 # (default settings omitted for brevity)
 
-# Internationalization
+# Security settings - only enable these in production (when DEBUG = False)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Dhaka' # Set to your local time zone
+TIME_ZONE = 'Asia/Dhaka'
 USE_I18N = True
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# Configuration for serving static files in production
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Location where collectstatic puts files
+STATIC_ROOT = BASE_DIR / 'staticfiles' # For deployment purposes
 
-# Collect static files from all app static directories
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-# Configure WhiteNoise to serve compressed static files
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
-# Media files configuration (for uploaded images like profile_pic.jpg)
+# Media files configuration (For user-uploaded images/files via Admin)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
