@@ -1,17 +1,16 @@
-"""
-Django settings for portfolio_project.
-"""
-
 import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-YOUR_RANDOM_SECRET_KEY'
+# For development, you can use a simple key. For production, use environment variable
+SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
+# Set to True for development, False for production
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Add localhost for development
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'probirdomain.com', 'www.probirdomain.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,9 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Custom App:
-    'portfolio_app', 
+    'portfolio_app',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +52,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -63,17 +59,20 @@ DATABASES = {
     }
 }
 
-# Internationalization
+# Security settings - only enable these in production (when DEBUG = False)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Dhaka'
+TIME_ZONE = 'Asia/Dhaka'  # Changed to your timezone
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' # For deployment purposes
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files configuration (For user-uploaded images/files via Admin)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

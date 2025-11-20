@@ -1,0 +1,247 @@
+{% extends "portfolio_app/base.html" %}
+
+{% block content %}
+<style>
+    .contact-container {
+        max-width: 800px;
+        margin: 4rem auto;
+        padding: 3rem 2rem;
+    }
+    
+    .contact-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .contact-header h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-header p {
+        font-size: 1.2rem;
+        color: #64748b;
+    }
+    
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    
+    .messages {
+        margin-bottom: 2rem;
+    }
+    
+    .message {
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        animation: slideIn 0.5s ease;
+    }
+    
+    .message.success {
+        background: #d1fae5;
+        color: #065f46;
+        border-left: 4px solid #10b981;
+    }
+    
+    .message.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border-left: 4px solid #ef4444;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #0f172a;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+    
+    .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+    
+    .submit-btn {
+        width: 100%;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-top: 2rem;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+        color: #764ba2;
+        transform: translateX(-5px);
+    }
+</style>
+
+<div class="contact-container">
+    <div class="contact-header">
+        <h2>Get In Touch</h2>
+        <p>Have a question or want to work together? Drop me a message!</p>
+    </div>
+    
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="form-container">
+        <form method="post" id="contactForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Your Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <span class="error-text">{{ form.name.errors }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Your Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <span class="error-text">{{ form.email.errors }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.message.id_for_label }}">Your Message</label>
+                {{ form.message }}
+                {% if form.message.errors %}
+                    <span class="error-text">{{ form.message.errors }}</span>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <span class="btn-text">Send Message</span>
+            </button>
+        </form>
+        
+        <a href="{% url 'home' %}" class="back-link">← Back to Portfolio</a>
+    </div>
+</div>
+
+<script>
+// Form validation and enhancement
+const contactForm = document.getElementById('contactForm');
+const submitBtn = contactForm.querySelector('.submit-btn');
+
+contactForm.addEventListener('submit', function(e) {
+    submitBtn.innerHTML = '<span class="btn-text">Sending...</span>';
+    submitBtn.disabled = true;
+});
+
+// Add floating label effect
+document.querySelectorAll('.form-group input, .form-group textarea').forEach(input => {
+    input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+    });
+    
+    input.addEventListener('blur', function() {
+        if (!this.value) {
+            this.parentElement.classList.remove('focused');
+        }
+    });
+    
+    // Check if already has value on page load
+    if (input.value) {
+        input.parentElement.classList.add('focused');
+    }
+});
+
+// Character counter for textarea
+const textarea = document.querySelector('textarea');
+if (textarea) {
+    const maxLength = 1000;
+    const counter = document.createElement('div');
+    counter.style.textAlign = 'right';
+    counter.style.fontSize = '0.9rem';
+    counter.style.color = '#64748b';
+    counter.style.marginTop = '0.5rem';
+    textarea.parentElement.appendChild(counter);
+    
+    function updateCounter() {
+        const remaining = maxLength - textarea.value.length;
+        counter.textContent = `${textarea.value.length} / ${maxLength} characters`;
+        if (remaining < 100) {
+            counter.style.color = '#ef4444';
+        } else {
+            counter.style.color = '#64748b';
+        }
+    }
+    
+    textarea.addEventListener('input', updateCounter);
+    textarea.setAttribute('maxlength', maxLength);
+    updateCounter();
+}
+</script>
+{% endblock %}

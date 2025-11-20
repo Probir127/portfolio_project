@@ -4,17 +4,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Probir's Portfolio{% endblock %}</title>
+    <meta name="description" content="Portfolio of Probir Saha Shohom - Python Developer, Backend & AI Enthusiast">
+    <meta name="keywords" content="Python Developer, Backend Development, FastAPI, Django, AI, Portfolio">
+    <meta name="author" content="Probir Saha Shohom">
     
+    <title>{% block title %}Dynamic Portfolio - Probir Saha Shohom{% endblock %}</title>
+    
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'portfolio_app/img/favicon.ico' %}">
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'portfolio_app/css/style.css' %}">
     
-    {% block head_extra %}{% endblock %} 
+    {% block extra_css %}{% endblock %}
+    
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        #loadingScreen .loader {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        #loadingScreen p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        #loadingScreen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div style="text-align: center;">
+            <div class="loader"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
     <main id="content">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
     
+    <!-- Back to Top Button -->
+    <button id="backToTop" style="position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000;" aria-label="Back to top">
+        ↑
+    </button>
+
+    <script>
+        // IMMEDIATELY hide loading screen - more robust approach
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }
+        }
+        
+        // Try multiple methods to ensure loading screen hides
+        // Method 1: On DOMContentLoaded (fires when HTML is parsed)
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(hideLoadingScreen, 100);
+        });
+        
+        // Method 2: On window load (fires when everything is loaded)
+        window.addEventListener('load', hideLoadingScreen);
+        
+        // Method 3: Fallback - hide after 3 seconds no matter what
+        setTimeout(hideLoadingScreen, 3000);
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.opacity = '1';
+                    backToTopBtn.style.visibility = 'visible';
+                } else {
+                    backToTopBtn.style.opacity = '0';
+                    backToTopBtn.style.visibility = 'hidden';
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+    
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
