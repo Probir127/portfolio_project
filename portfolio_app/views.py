@@ -1,5 +1,18 @@
+# ==================================
+# SOLUTION: Use Static Image for Profile Picture
+# ==================================
+
+# STEP 1: Add your image to static folder
+# ----------------------------------------
+# Put your profile image here:
+# portfolio_app/static/portfolio_app/img/profile.jpg
+# (or profile.png, whatever format you have)
+
+# STEP 2: Update views.py
+# ----------------------------------------
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.templatetags.static import static
 from .models import Profile, Project, Skill
 from .forms import ContactForm
 
@@ -11,7 +24,7 @@ def home_view(request):
         context = {
             'name': 'Probir Saha Shohom',
             'title': 'Python Developer | Backend & AI Enthusiast',
-            'profile_pic': None,  # ADDED: Explicit None for fallback
+            'profile_pic': static('portfolio_app/img/profile.jpg'),  # STATIC IMAGE PATH
             'contact': {
                 'phone': '01711162048',
                 'email': 'sohom5102@gmail.com',
@@ -55,7 +68,6 @@ def home_view(request):
         # FIXED: Properly group skills by category display name
         grouped_skills = {}
         for skill in profile.skills.all():
-            # Use get_category_display() to get the human-readable name
             cat_display = skill.get_category_display()
             if cat_display not in grouped_skills:
                 grouped_skills[cat_display] = []
@@ -96,15 +108,20 @@ def home_view(request):
         if query:
             projects = projects.filter(technologies__icontains=query)
         
-        # FIXED: Add profile_pic to context
+        # Use static image if no profile_pic uploaded, otherwise use uploaded image
+        if profile.profile_pic:
+            profile_pic_url = profile.profile_pic.url
+        else:
+            profile_pic_url = static('portfolio_app/img/profile.jpg')
+        
         context = {
             'profile': profile,
             'name': profile.name,
             'title': profile.title,
-            'profile_pic': profile.profile_pic.url if profile.profile_pic else None,  # ADDED
+            'profile_pic': profile_pic_url,  # WILL USE STATIC IMAGE
             'contact': contact,
             'summary': profile.summary,
-            'skills_data': ordered_skills,  # Use the properly ordered skills
+            'skills_data': ordered_skills,
             'experience': experience,
             'projects': projects,
             'education': profile.educations.all(),
