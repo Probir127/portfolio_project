@@ -18,11 +18,18 @@
 </header>
 
 <div class="profile-header">
-    {% if profile.profile_pic %}
+    <!-- FIXED IMAGE SECTION -->
+    {% if profile_pic %}
+        <img src="{{ profile_pic }}" alt="{{ name }}'s Photo" class="profile-img">
+    {% elif profile.profile_pic %}
         <img src="{{ profile.profile_pic.url }}" alt="{{ name }}'s Photo" class="profile-img">
     {% else %}
-        <img src="{% static 'portfolio_app/img/profile_pic.jpg' %}" alt="{{ name }}" class="profile-img">
+        <!-- Fallback: Letter Avatar with gradient background -->
+        <div class="profile-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700; border: 5px solid rgba(255, 255, 255, 0.4); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);">
+            {{ name|slice:":1"|upper }}
+        </div>
     {% endif %}
+    
     <h1>{{ name }}</h1>
     {% if title %}
         <p class="title-role">{{ title }}</p>
