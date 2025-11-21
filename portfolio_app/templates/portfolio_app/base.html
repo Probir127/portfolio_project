@@ -659,22 +659,28 @@
 
     <!-- About Section -->
     <section id="about">
-        <div class="section-header">
-            <div class="section-badge">About Me</div>
-            <h2 class="section-title">Building the Future</h2>
-            <p class="section-description">Passionate developer focused on creating impactful solutions</p>
+    <div class="section-header">
+        <div class="section-badge">About Me</div>
+        <h2 class="section-title">Building the Future</h2>
+        <p class="section-description">Passionate developer focused on creating impactful solutions</p>
+    </div>
+    <div class="about-content">
+        <div class="about-image">
+            <!-- Direct image link - replace with your actual image URL -->
+            <img src="https://raw.githubusercontent.com/Probir127/portfolio_project/main/portfolio_app/static/portfolio_app/img/profile.jpg" 
+                 alt="Probir Saha Shohom" 
+                 style="width: 100%; height: 400px; object-fit: cover; border-radius: 16px; border: 1px solid var(--border);"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <!-- Fallback if image fails to load -->
+            <div style="width: 100%; height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; display: none; align-items: center; justify-content: center; color: white; font-size: 5rem; font-weight: 700; border: 1px solid var(--border);">P</div>
         </div>
-        <div class="about-content">
-            <div class="about-image">
-                <div style="width: 100%; height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem; font-weight: 700; border: 1px solid var(--border);">P</div>
-            </div>
-            <div class="about-text">
-                <p>I'm a passionate Python Developer with a strong foundation in backend development, REST API design, and clean code practices. Currently completing my Diploma in Computer Science while gaining real-world experience at ACME.AI.</p>
-                <p>I specialize in building scalable backend systems using FastAPI, Django, and Flask, with a growing interest in AI/ML applications and modern web technologies.</p>
-                <a href="#contact" class="btn btn-primary">Let's Work Together</a>
-            </div>
+        <div class="about-text">
+            <p>I'm a passionate Python Developer with a strong foundation in backend development, REST API design, and clean code practices. Currently completing my Diploma in Computer Science while gaining real-world experience at ACME.AI.</p>
+            <p>I specialize in building scalable backend systems using FastAPI, Django, and Flask, with a growing interest in AI/ML applications and modern web technologies.</p>
+            <a href="#contact" class="btn btn-primary">Let's Work Together</a>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Skills Section -->
     <section id="skills">
@@ -767,12 +773,12 @@
             <div class="project-card">
                 <div class="project-image">P</div>
                 <div class="project-content">
-                    <h3>Project Title</h3>
-                    <p>Description of your amazing project and what makes it special</p>
+                    <h3>HR-Chatbot</h3>
+                    <p>Description of my amazing project and what makes it special</p>
                     <div class="project-tech">
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">FastAPI</span>
-                        <span class="tech-badge">PostgreSQL</span>
+                        <span class="tech-badge">LangChain</span>
                     </div>
                     <div class="project-links">
                         <a href="#">View Live →</a>
@@ -783,12 +789,28 @@
             <div class="project-card">
                 <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">P</div>
                 <div class="project-content">
-                    <h3>Another Project</h3>
-                    <p>Another great project showcasing your skills and expertise</p>
+                    <h3>cafe-management</h3>
+                    <p>Another great project showcasing my skills and expertise</p>
                     <div class="project-tech">
-                        <span class="tech-badge">Django</span>
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">Docker</span>
+                        <span class="tech-badge">Flask</span>
+                        <span class="tech-badge">HTML</span>
+                        <span class="tech-badge">css</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#">View Live →</a>
+                        <a href="#">View Code →</a>
+                    </div>
+                </div>
+            </div>
+             <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">P</div>
+                <div class="project-content">
+                    <h3>Attendance-management</h3>
+                    <p>Another great project showcasing my skills and expertise</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flask</span>
+                        <span class="tech-badge">HTML</span>
+                        <span class="tech-badge">css</span>
                     </div>
                     <div class="project-links">
                         <a href="#">View Live →</a>
@@ -798,7 +820,6 @@
             </div>
         </div>
     </section>
-
     <!-- Contact Section -->
     <section id="contact">
         <div class="contact-content">
