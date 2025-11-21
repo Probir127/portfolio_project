@@ -18,14 +18,22 @@
 </header>
 
 <div class="profile-header">
-    <!-- FIXED IMAGE SECTION -->
+    <!-- COMPLETELY REWRITTEN IMAGE SECTION -->
     {% if profile_pic %}
-        <img src="{{ profile_pic }}" alt="{{ name }}'s Photo" class="profile-img">
+        <!-- Case 1: profile_pic URL is provided -->
+        <img src="{{ profile_pic }}" alt="{{ name }}'s Photo" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="profile-img" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700;">
+            {{ name|slice:":1"|upper }}
+        </div>
     {% elif profile.profile_pic %}
-        <img src="{{ profile.profile_pic.url }}" alt="{{ name }}'s Photo" class="profile-img">
+        <!-- Case 2: profile.profile_pic object exists -->
+        <img src="{{ profile.profile_pic.url }}" alt="{{ name }}'s Photo" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="profile-img" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700;">
+            {{ name|slice:":1"|upper }}
+        </div>
     {% else %}
-        <!-- Fallback: Letter Avatar with gradient background -->
-        <div class="profile-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700; border: 5px solid rgba(255, 255, 255, 0.4); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);">
+        <!-- Case 3: No image - Letter Avatar -->
+        <div class="profile-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.3);">
             {{ name|slice:":1"|upper }}
         </div>
     {% endif %}
