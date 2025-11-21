@@ -1,15 +1,3 @@
-# ==================================
-# SOLUTION: Use Static Image for Profile Picture
-# ==================================
-
-# STEP 1: Add your image to static folder
-# ----------------------------------------
-# Put your profile image here:
-# portfolio_app/static/portfolio_app/img/profile.jpg
-# (or profile.png, whatever format you have)
-
-# STEP 2: Update views.py
-# ----------------------------------------
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.templatetags.static import static
@@ -24,7 +12,7 @@ def home_view(request):
         context = {
             'name': 'Probir Saha Shohom',
             'title': 'Python Developer | Backend & AI Enthusiast',
-            'profile_pic': static('portfolio_app/img/profile.jpg'),  # STATIC IMAGE PATH
+            'profile_pic': static('portfolio_app/img/profile.jpg'),  # STATIC IMAGE
             'contact': {
                 'phone': '01711162048',
                 'email': 'sohom5102@gmail.com',
@@ -65,7 +53,7 @@ def home_view(request):
     else:
         contact = getattr(profile, 'contact', None)
         
-        # FIXED: Properly group skills by category display name
+        # Properly group skills by category display name
         grouped_skills = {}
         for skill in profile.skills.all():
             cat_display = skill.get_category_display()
@@ -108,17 +96,15 @@ def home_view(request):
         if query:
             projects = projects.filter(technologies__icontains=query)
         
-        # Use static image if no profile_pic uploaded, otherwise use uploaded image
-        if profile.profile_pic:
-            profile_pic_url = profile.profile_pic.url
-        else:
-            profile_pic_url = static('portfolio_app/img/profile.jpg')
+        # ALWAYS USE STATIC IMAGE (ignore database upload)
+        # This ensures image works on Render without cloud storage
+        profile_pic_url = static('portfolio_app/img/profile.jpg')
         
         context = {
             'profile': profile,
             'name': profile.name,
             'title': profile.title,
-            'profile_pic': profile_pic_url,  # WILL USE STATIC IMAGE
+            'profile_pic': profile_pic_url,  # STATIC IMAGE
             'contact': contact,
             'summary': profile.summary,
             'skills_data': ordered_skills,
