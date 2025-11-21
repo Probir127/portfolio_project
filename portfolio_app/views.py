@@ -11,6 +11,7 @@ def home_view(request):
         context = {
             'name': 'Probir Saha Shohom',
             'title': 'Python Developer | Backend & AI Enthusiast',
+            'profile_pic': None,  # ADDED: Explicit None for fallback
             'contact': {
                 'phone': '01711162048',
                 'email': 'sohom5102@gmail.com',
@@ -95,10 +96,12 @@ def home_view(request):
         if query:
             projects = projects.filter(technologies__icontains=query)
         
+        # FIXED: Add profile_pic to context
         context = {
             'profile': profile,
             'name': profile.name,
             'title': profile.title,
+            'profile_pic': profile.profile_pic.url if profile.profile_pic else None,  # ADDED
             'contact': contact,
             'summary': profile.summary,
             'skills_data': ordered_skills,  # Use the properly ordered skills
