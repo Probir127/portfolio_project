@@ -1,0 +1,391 @@
+{% extends "portfolio_app/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Scroll Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<header id="mainHeader">
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="{% url 'contact' %}" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<div class="profile-header">
+    {% if profile_pic %}
+        <img src="{{ profile_pic }}" alt="{{ name }}'s Photo" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="profile-img" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700;">
+            {{ name|slice:":1"|upper }}
+        </div>
+    {% elif profile.profile_pic %}
+        <img src="{{ profile.profile_pic.url }}" alt="{{ name }}'s Photo" class="profile-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="profile-img" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700;">
+            {{ name|slice:":1"|upper }}
+        </div>
+    {% else %}
+        <div class="profile-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; font-weight: 700;">
+            {{ name|slice:":1"|upper }}
+        </div>
+    {% endif %}
+    
+    <h1>{{ name }}</h1>
+    {% if title %}
+        <p class="title-role">{{ title }}</p>
+    {% endif %}
+    
+    <!-- Contact Info in Header -->
+    {% if contact %}
+    <div style="margin: 1.5rem 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; position: relative; z-index: 1; font-size: 0.9rem; color: var(--text-secondary);">
+        {% if contact.email %}
+        <a href="mailto:{{ contact.email }}" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s;" title="Email">
+            📧 {{ contact.email }}
+        </a>
+        {% endif %}
+        {% if contact.phone %}
+        <a href="tel:{{ contact.phone }}" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s;" title="Phone">
+            📱 {{ contact.phone }}
+        </a>
+        {% endif %}
+        {% if contact.location %}
+        <span style="color: var(--text-secondary);" title="Location">
+            📍 {{ contact.location }}
+        </span>
+        {% endif %}
+    </div>
+    
+    <!-- Social Links -->
+    <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; position: relative; z-index: 1;">
+        {% if contact.linkedin_url %}
+        <a href="{{ contact.linkedin_url }}" target="_blank" rel="noopener" style="color: white; background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 50%; display: inline-flex; transition: all 0.3s ease;" title="LinkedIn">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+            </svg>
+        </a>
+        {% endif %}
+        {% if contact.github_url %}
+        <a href="{{ contact.github_url }}" target="_blank" rel="noopener" style="color: white; background: rgba(255,255,255,0.2); padding: 0.75rem; border-radius: 50%; display: inline-flex; transition: all 0.3s ease;" title="GitHub">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- About Section -->
+<section id="about">
+    <h2 class="section-heading">About Me</h2>
+    <p>{{ summary }}</p>
+</section>
+
+<!-- Skills Section -->
+<section id="skills">
+    <h2 class="section-heading">Technical Skills</h2>
+    <div class="skills-grid">
+        {% for cat, items in skills_data.items %}
+            <div class="skill-category">
+                <h3>{{ cat }}</h3>
+                <div class="skill-list">
+                    {% for item in items %}
+                        <span class="skill-item">{{ item }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #64748b;">
+                <p>Add your skills in the admin panel to display them here.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience">
+    <h2 class="section-heading">Professional Experience</h2>
+    {% for job in experience %}
+        <div class="job-entry">
+            <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h3>{{ job.title }} @ {{ job.company }}</h3>
+                    <p style="margin-top: 0.25rem;">{{ job.years }}{% if job.is_current %} <span style="background: var(--gradient-primary); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Current</span>{% endif %}</p>
+                </div>
+            </div>
+            <ul style="margin-top: 1rem;">
+                {% for point in job.points %}
+                    <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <div style="text-align: center; padding: 2rem; color: #64748b;">
+            <p>Add your experience in the admin panel to display it here.</p>
+        </div>
+    {% endfor %}
+</section>
+
+<!-- Education Section -->
+<section id="education">
+    <h2 class="section-heading">Education</h2>
+    <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
+        {% for edu in education %}
+            <div class="job-entry" style="border-left: 4px solid var(--accent);">
+                <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h3 style="font-size: 1.3rem;">{{ edu.degree }}</h3>
+                        <p style="color: var(--accent); font-weight: 600; margin-top: 0.5rem;">{{ edu.school }}</p>
+                        <p style="color: var(--text-secondary); margin-top: 0.25rem;">{{ edu.years }} {% if edu.status == 'Ongoing' %}<span style="background: rgba(168, 85, 247, 0.2); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">{{ edu.status }}</span>{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div style="text-align: center; padding: 2rem; color: #64748b;">
+                <p>Add your education in the admin panel.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+    <h2 class="section-heading">Featured Projects</h2>
+    <form method="get" style="margin-bottom: 2.5rem;">
+        <input type="text" name="q" placeholder="Search projects by technology..." value="{{ request.GET.q }}" aria-label="Filter projects">
+        <button type="submit" class="btn">Search</button>
+    </form>
+    <div class="projects-list">
+        {% for project in projects %}
+            <div class="project-card">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                {% else %}
+                    <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700;">
+                        {{ project.title|slice:":1"|upper }}
+                    </div>
+                {% endif %}
+                <div style="padding: 1.5rem;">
+                    <h4 style="display: flex; align-items: center; gap: 0.5rem;">
+                        {{ project.title }}
+                        {% if project.featured %}
+                        <span style="background: var(--gradient-primary); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600;">FEATURED</span>
+                        {% endif %}
+                    </h4>
+                    <p><strong>Technologies:</strong> {{ project.technologies }}</p>
+                    <p>{{ project.description|truncatewords:25 }}</p>
+                    <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                        {% if project.github_link %}
+                            <a href="{{ project.github_link }}" class="btn btn-secondary" target="_blank" rel="noopener">
+                                <svg width="16" height="16" fill="currentColor" style="vertical-align: middle;" viewBox="0 0 16 16">
+                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                                </svg>
+                                Code
+                            </a>
+                        {% endif %}
+                        {% if project.live_link %}
+                            <a href="{{ project.live_link }}" class="btn btn-primary" target="_blank" rel="noopener">
+                                <svg width="16" height="16" fill="currentColor" style="vertical-align: middle;" viewBox="0 0 16 16">
+                                    <path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                    <path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                </svg>
+                                Live Demo
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border);">
+                <p style="font-size: 1.1rem; color: var(--text-secondary);">No projects found. Add your projects in the admin panel!</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Certifications & Languages Section -->
+<section id="certifications">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 3rem;">
+        <!-- Certifications -->
+        <div>
+            <h2 class="section-heading" style="font-size: 2rem; text-align: left;">Certifications</h2>
+            {% if certifications %}
+                <div style="display: grid; gap: 1rem; margin-top: 2rem;">
+                    {% for cert in certifications %}
+                        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: all 0.3s ease;">
+                            <h4 style="color: var(--text-primary); font-size: 1rem; margin-bottom: 0.25rem;">{{ cert.name }}</h4>
+                            {% if cert.issuer %}
+                            <p style="color: var(--accent); font-size: 0.875rem; font-weight: 600;">{{ cert.issuer }}</p>
+                            {% endif %}
+                            {% if cert.year %}
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">{{ cert.year }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Add certifications in the admin panel.</p>
+            {% endif %}
+        </div>
+        
+        <!-- Languages & Interests -->
+        <div>
+            <h2 class="section-heading" style="font-size: 2rem; text-align: left;">Languages & Interests</h2>
+            
+            <!-- Languages -->
+            {% if languages %}
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem;">Languages</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        {% for lang in languages %}
+                            <span style="background: rgba(168, 85, 247, 0.1); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; border: 1px solid rgba(168, 85, 247, 0.2);">
+                                {{ lang.lang }} - {{ lang.level }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <!-- Interests -->
+            {% if interests %}
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem;">Interests</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        {% for interest in interests %}
+                            <span style="background: rgba(236, 72, 153, 0.1); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; border: 1px solid rgba(236, 72, 153, 0.2);">
+                                {{ interest }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>{{ name }}</h3>
+            {% if title %}
+            <p style="margin-top: 0.5rem;">{{ title }}</p>
+            {% endif %}
+        </div>
+        
+        {% if contact %}
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+            {% if contact.phone %}
+            <a href="tel:{{ contact.phone }}">{{ contact.phone }}</a>
+            {% endif %}
+            <p style="margin-top: 0.5rem;">{{ contact.location }}</p>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Connect</h3>
+            <div class="footer-social">
+                {% if contact.github_url %}
+                <a href="{{ contact.github_url }}" target="_blank" rel="noopener" title="GitHub">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+                {% endif %}
+                {% if contact.linkedin_url %}
+                <a href="{{ contact.linkedin_url }}" target="_blank" rel="noopener" title="LinkedIn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>© 2025 {{ name }}. Built with Django & Python.</p>
+        <p>Designed with passion for clean code and beautiful interfaces</p>
+    </div>
+</footer>
+
+<script>
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('progressBar').style.width = scrolled + '%';
+});
+
+// Header Shadow on Scroll
+const header = document.getElementById('mainHeader');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId !== '#' && document.querySelector(targetId)) {
+            e.preventDefault();
+            const target = document.querySelector(targetId);
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Fade in elements on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.job-entry, .project-card, .skill-category').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'all 0.6s ease';
+    observer.observe(el);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,267 @@
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">👋 Available for opportunities</div>
+        <h1>
+            Hi, I'm <span class="gradient-text">{{ name }}</span><br>
+            {{ title }}
+        </h1>
+        <p>Passionate about backend development, REST API design, and clean code practices</p>
+
+        <div class="contact-info">
+            {% if contact.phone %}
+            <a href="tel:{{ contact.phone }}">📱 {{ contact.phone }}</a>
+            {% endif %}
+            {% if contact.email %}
+            <a href="mailto:{{ contact.email }}">📧 {{ contact.email }}</a>
+            {% endif %}
+            {% if contact.location %}
+            <span>📍 {{ contact.location }}</span>
+            {% endif %}
+        </div>
+
+        <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            {% if contact.linkedin_url %}
+            <a href="{{ contact.linkedin_url }}" target="_blank" class="btn btn-secondary">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+                </svg>
+                LinkedIn
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+    <div class="section-header">
+        <div class="section-badge">About Me</div>
+        <h2 class="section-title">Building the Future</h2>
+        <p class="section-description">Passionate developer focused on creating impactful solutions</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem;">
+        <div class="about-image">
+            {% if profile_pic %}
+            <img src="{{ profile_pic }}" alt="{{ name }}"
+                style="width: 100%; height: 400px; object-fit: cover; border-radius: 16px; border: 1px solid var(--border);"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            {% endif %}
+            <!-- Fallback or Initial -->
+            <div
+                style="width: 100%; height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; {% if profile_pic %}display: none;{% else %}display: flex;{% endif %} align-items: center; justify-content: center; color: white; font-size: 5rem; font-weight: 700; border: 1px solid var(--border);">
+                {{ name|slice:":1" }}
+            </div>
+        </div>
+        <div class="about-text">
+            <p>{{ summary|linebreaksbr }}</p>
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                {% if contact.github_url %}
+                <a href="{{ contact.github_url }}" target="_blank" class="btn btn-primary">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    GitHub
+                </a>
+                {% endif %}
+                {% if contact.linkedin_url %}
+                <a href="{{ contact.linkedin_url }}" target="_blank" class="btn btn-secondary">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+                    </svg>
+                    LinkedIn
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills">
+    <div class="section-header">
+        <div class="section-badge">Technical Skills</div>
+        <h2 class="section-title">What I Work With</h2>
+    </div>
+    <div class="skills-grid">
+        {% for category, skills in skills_data.items %}
+        <div class="skill-card">
+            <h3>{{ category }}</h3>
+            <div class="skill-tags">
+                {% for skill in skills %}
+                <span class="skill-tag">{{ skill }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center;">
+            <p style="color: var(--text-secondary);">No skills added yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience">
+    <div class="section-header">
+        <div class="section-badge">Experience</div>
+        <h2 class="section-title">Professional Journey</h2>
+    </div>
+    <div class="timeline">
+        {% for job in experience %}
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h3>{{ job.title }}
+                    {% if job.is_current %}
+                    <span class="badge badge-current">Current</span>
+                    {% endif %}
+                </h3>
+                <div class="company">{{ job.company }}</div>
+                <div class="date">{{ job.years }}</div>
+                <ul>
+                    {% for point in job.points %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% empty %}
+        <div style="text-align: center; color: var(--text-secondary);">
+            <p>No experience added yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Education Section -->
+<section id="education">
+    <div class="section-header">
+        <div class="section-badge">Education</div>
+        <h2 class="section-title">Academic Background</h2>
+    </div>
+    <div style="max-width: 800px; margin: 0 auto;">
+        {% for edu in education %}
+        <div class="info-card">
+            <h3>{{ edu.degree }}
+                {% if edu.status == 'Ongoing' %}
+                <span class="badge badge-ongoing">{{ edu.status }}</span>
+                {% endif %}
+            </h3>
+            <div class="subtitle">{{ edu.school }}</div>
+            <div class="meta">{{ edu.years }}</div>
+        </div>
+        {% empty %}
+        <div style="text-align: center; color: var(--text-secondary);">
+            <p>No education added yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+    <div class="section-header">
+        <div class="section-badge">Projects</div>
+        <h2 class="section-title">Featured Work</h2>
+    </div>
+    <div class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <div class="project-image">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                {% else %}
+                <div
+                    style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    {{ project.title|slice:":2"|upper }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="project-content">
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description|truncatewords:20 }}</p>
+                <div class="project-tech">
+                    <span class="tech-badge">{{ project.technologies }}</span>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="btn btn-secondary"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Code</a>
+                    {% endif %}
+                    {% if project.live_link %}
+                    <a href="{{ project.live_link }}" target="_blank" class="btn btn-primary"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Live</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">
+            <p>No projects added yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Certifications & Additional Info -->
+<section id="certifications">
+    <div class="two-column">
+        <div>
+            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="section-badge">Certifications & Training</div>
+                <h2 class="section-title" style="font-size: 2rem;">Continuous Learning</h2>
+            </div>
+            {% for cert in certifications %}
+            <div class="info-card">
+                <h3>{{ cert.name }}</h3>
+                {% if cert.issuer %}
+                <div class="subtitle">{{ cert.issuer }}</div>
+                {% endif %}
+                {% if cert.year %}
+                <div class="meta">{{ cert.year }}</div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p style="color: var(--text-secondary);">No certifications added yet.</p>
+            {% endfor %}
+        </div>
+
+        <div>
+            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="section-badge">Languages & Interests</div>
+                <h2 class="section-title" style="font-size: 2rem;">Beyond Code</h2>
+            </div>
+
+            {% if languages %}
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--accent);">Languages</h3>
+                <div class="tag-list">
+                    {% for lang in languages %}
+                    <span class="tag">{{ lang.lang }} – {{ lang.level }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if interests %}
+            <div>
+                <h3 style="margin-bottom: 1rem; color: var(--accent);">Interests</h3>
+                <div class="tag-list">
+                    {% for interest in interests %}
+                    <span class="tag">{{ interest }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
